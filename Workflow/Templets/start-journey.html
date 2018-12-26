@@ -1,69 +1,154 @@
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
-    <!-- Import Google Icon Font -->
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <!-- external css -->
-    <link rel="stylesheet" href="./start-journey.css" />
-    <!-- Bootstrap Css CDN -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <!-- Bootstrap JS CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="col-md-12">
-        <img
-          src="../design-templet/assets/start.png"
-          alt="widget image"
-          class="img-fluid start-img"
-        />
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <!-- external css -->
+  <link rel="stylesheet" href="./start-journey.css" />
+  <link rel="stylesheet" href="./emailautomation.css" />
+  <!-- Bootstrap Css CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous" />
+  <!-- Bootstrap JS CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container after-view-select">
+    <div class="col-md-12 header-top" style="border:none;">
+      <div class="row main-header" style="margin-bottom:30px;">
+        <img src="../design-templet/assets/leftarrow.png" alt="back-icon" onclick="goBack()" class="img-responsive left-aero">
+        <p class="header-heading center-block">View All Journey</p>
       </div>
-      <div class="col-md-12">
-        <p class="img-para">
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that
-        </p>
-      </div>
-      <div class="col-md-12">
-        <div class="row view-btn-row">
-          <div class="col- col-md-6 col-sm-3 col-xs-3">
-            <button class="btn-start pull-left">Start Journey</button>
-          </div>
-          <div class="col- col-md-5 col-sm-3 col-xs-3">
-            <p class="view-journey">View All Journey (8)</p>
-          </div>
+    </div>
+    <div class="col-md-12 center-block journey-append">
+      <!-- <div class="col-md-6 center-block journey-block" style="padding: 9px;">center</div> -->
+    </div>
+  </div>
+  <div class="container front_container">
+    <div class="col-md-12">
+      <img src="../design-templet/assets/start.png" alt="widget image" class="img-fluid start-img" />
+    </div>
+    <div class="col-md-12">
+      <p class="img-para">
+        It is a long established fact that a reader will be distracted by the
+        readable content of a page when looking at its layout. The point of
+        using Lorem Ipsum is that
+      </p>
+    </div>
+    <div class="col-md-12">
+      <div class="row view-btn-row">
+        <div class="col- col-md-6 col-sm-3 col-xs-3">
+          <button class="btn-start pull-left">Start Journey</button>
+        </div>
+        <div class="col- col-md-5 col-sm-3 col-xs-3">
+          <p class="view-journey">View All Journey (8)</p>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+<script>
+  $(function () {
+    var count = 0;
+    var cityBuildingIdContainer = [];
+    var cityBuildingNameContainer = [];
+    var templateContainer = [];
+    var mappinArray = [];
+
+    $.ajax({
+      type: "GET",
+      url: "http://127.0.0.1:8000/weDev/api/mail/cityBuildingPageTemplate/",
+      success: function (data) {
+        for (var i = 0; i < data.length; i++) {
+          cityBuildingIdContainer.push({
+            C_id: data[i].city,
+            B_id: data[i].building,
+            Template: data[i].template
+          });
+        }
+      }
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "http://127.0.0.1:8000/weDev/api/mail/template/",
+      success: function (data) {
+        for (var i = 0; i < data.length; i++) {
+          templateContainer.push({
+            T_id: data[i].id,
+            name: data[i].name,
+          });
+        }
+        console.log(templateContainer);
+      }
+    });
+    $.ajax({
+      type: "GET",
+      url: "http://127.0.0.1:8000/weDev/api/mail/cityBuildingList/",
+      success: function (data) {
+        for (var i = 0; i < data.length; i++) {
+          for (var j = 0; j < data[i].building_set.length; j++) {
+            cityBuildingNameContainer.push({
+              b_id: data[i].building_set[j].id,
+              c_id: data[i].building_set[j].city,
+              b_name: data[i].building_set[j].buildingname,
+            });
+          }
+        }
+        for (var build = 0; build < data.length; build++) {
+          $('.journey-append').append('<div class="col-md-6 center-block journey-block" style=" margin-top:5px;padding: 9px;">' + data[build].cityname + '<div class="' + data[build].id + '"></div></div>');
+          console.log(data[build].cityname);
+        }
+        // console.log(cityBuildingIdContainer);
+        // console.log(cityBuildingNameContainer);
+        for (var x = 0; x < cityBuildingIdContainer.length; x++) {
+          // console.log('its first for loop');
+          for (var y = 0; y < cityBuildingNameContainer.length; y++) {
+            // console.log('its second for loop');
+            if (cityBuildingIdContainer[x].C_id == cityBuildingNameContainer[y].c_id && cityBuildingIdContainer[x].B_id == cityBuildingNameContainer[y].b_id) {
+              // count++;
+              // console.log('its if statement');
+              for (var temp = 0; temp < templateContainer.length; temp++) {
+                // console.log('its third for loop');
+                if (cityBuildingIdContainer[x].Template == templateContainer[temp].T_id) {
+                  // console.log('its working fine');
+                  mappinArray.push({
+                    c_id: cityBuildingIdContainer[x].C_id,
+                    building: cityBuildingNameContainer[y].b_name,
+                    template: templateContainer[temp].name
+                  });
+                }
+              }
+            }
+          }
+        }
+
+
+        console.log(mappinArray);
+        console.log(templateContainer);
+        console.log(count);
+        // for (var lappend = 0; lappend < mappinArray.length; lappend++) {
+        //   console.log('for loop is worlking');
+        //   $('.journey-append').append('<div class="col-md-6 center-block journey-block" style=" margin-top:5px;padding: 9px;">' + mappinArray[lappend].building + ' And ' + mappinArray[lappend].template + '</div>');
+        // }
+        $('.view-journey').click(function () {
+          $('.front_container').hide();
+          $('.after-view-select').show();
+          // console.log('its working');
+        });
+      }
+    });
+
+    console.log(cityBuildingIdContainer.length);
+    console.log(cityBuildingNameContainer.length);
+  });
+  function goBack() {
+    $('.front_container').show();
+    $('.after-view-select').hide();
+  }
+
+</script>
+
 </html>

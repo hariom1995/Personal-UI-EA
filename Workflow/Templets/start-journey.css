@@ -31,7 +31,17 @@
     cursor: pointer;
     /* width: 22%; */
 }
-
+.after-view-select{
+    display: none;
+}
+.journey-block{
+    text-align: center;
+    background-color: #efefef;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #707070;
+}
 .view-journey {
     display: block;
     margin-top: 11%;
